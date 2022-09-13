@@ -25,8 +25,12 @@ import MapsHomeWorkOutlinedIcon from "@mui/icons-material/MapsHomeWorkOutlined";
 import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
 import BiotechOutlinedIcon from "@mui/icons-material/BiotechOutlined";
 import FirstCard from "../cards/FirstCard";
-import { Grid } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import banner from "../../Assets/Twitter-banner-spacing.png";
+import ClearIcon from "@mui/icons-material/Clear";
+import ColouredButton from "../Buttons/Buttons";
+import { makeStyles } from "@mui/styles";
+import backgrondimage from "../../Assets/bg2.png";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -97,19 +101,24 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-
+  const classes = useStyles();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }} className={classes.mainBox}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{
+          background: "transparent",
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -123,25 +132,57 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
+          <Grid
+            container
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Grid item>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  color: "#000",
+                }}
+              >
+                NFT Mint
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Stack
+                spacing={4}
+                direction="row"
+                sx={{ display: "flex", justifyContent: "end" }}
+              >
+                <ColouredButton txt="Connect Discord" index="1" />
+                <ColouredButton txt="Connect Wallet" index="2" />
+              </Stack>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader
           sx={{
             justifyContent: "space-between",
-            marginTop: "10px",
           }}
         >
-          <img src={banner} alt="" width="150px" />
+          {open && (
+            <img
+              src={banner}
+              alt=""
+              width="100px"
+              sx={{
+                margin: "10px",
+              }}
+            />
+          )}
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            {/* {theme.direction === "rtl" ? ( */}
+            {open == true && <ClearIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -247,3 +288,10 @@ export default function MiniDrawer() {
     </Box>
   );
 }
+
+const useStyles = makeStyles({
+  mainBox: {
+    background: "../../Assets/bg2.png",
+    backgroundColor: "#fff",
+  },
+});
